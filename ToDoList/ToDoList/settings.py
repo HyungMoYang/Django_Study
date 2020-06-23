@@ -122,4 +122,4 @@ STATIC_URL = '/static/'
 
 
 # Base dir check test
-print(f"test1: {BASE_DIR}")
+# print(f"test1: {BASE_DIR}")

@@ -16,3 +16,11 @@ def createTodo(request):
     new_todo.save()
     return HttpResponseRedirect(reverse('index'))
     # return HttpResponse("create Todo를 할 거야! =>" + user_input_str)
+
+def doneTodo(request):
+    done_todo_id = request.GET['todoNum']
+    print("완료한 todo의 id", done_todo_id)
+    todo = Todo.objects.get(id = done_todo_id)
+    todo.isDone = True
+    todo.save() # db 내용을 save
+    return HttpResponseRedirect(reverse('index'))

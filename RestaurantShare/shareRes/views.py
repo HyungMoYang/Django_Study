@@ -27,15 +27,16 @@ def restaurantUpdate(request, res_id):
     return render(request, 'shareRes/restaurantUpdate.html', content)
 
 def Update_restaurant(request):
-    resId = request.POST['resId']
+    resId = request.POST['resId'] 
+    # 페이지의 변경점들을 request.POST로 받아서
     change_category_id = request.POST['resCategory']
     change_category = Category.objects.get(id = change_category_id)
     change_name = request.POST['resTitle']
     change_link = request.POST['resLink']
     change_content = request.POST['resContent']
     change_keyword = request.POST['resLoc']
-
-    before_restaurant = Restaurant.objects.get(id = resId)
+    # resId와 일치하는 DB를 불러와서 변경시켜 준다.
+    before_restaurant = Restaurant.objects.get(id = resId) 
     before_restaurant.category = change_category
     before_restaurant.restaurant_name = change_name
     before_restaurant.restaurant_link = change_link

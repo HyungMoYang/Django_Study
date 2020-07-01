@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from .models import *
+from shareRes.models import *
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # Create your views here.
 
@@ -50,7 +54,7 @@ def Delete_restaurant(request):
     res_id = request.POST['resId']
     restaurant = Restaurant.objects.get(id = res_id)
     restaurant.delete()
-    
+
     return HttpResponseRedirect(reverse('index'))
 
 # create page

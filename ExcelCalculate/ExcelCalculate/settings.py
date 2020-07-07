@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    'django.contrib.sessions', # session 사용
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', # session 사용을 위한 middleware 추가 
 ]
 
 ROOT_URLCONF = 'ExcelCalculate.urls'

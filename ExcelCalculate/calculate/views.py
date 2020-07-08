@@ -21,11 +21,11 @@ def calculate(request):
     # grade별 최솟값 최댓값 평균값 구하기
     grade_calculate_dic = {}
     for key in grade_dic.keys():
-        grade_calculate_dic[key] = {}
+        grade_calculate_dic[key] = {} # 'grade_calculate_dic'의 key 값의 value로 다시 dict
         grade_calculate_dic[key]['min'] = min(grade_dic[key])
         grade_calculate_dic[key]['max'] = max(grade_dic[key])
         grade_calculate_dic[key]['avg'] = float(sum(grade_dic[key])) / len(grade_dic[key])
-    
+
     # 결과 출력
     grade_list = list(grade_calculate_dic.keys())
     grade_list.sort()
@@ -35,4 +35,17 @@ def calculate(request):
         print(" / max:", grade_calculate_dic[key]['max'], end='')
         print(" / avg:", grade_calculate_dic[key]['avg'], end='\n\n')
     
+    # 이메일 주소 도메인별 인원 구하기
+    email_domain_dic = {}
+    for i in range(total_row_num):
+        data = df.loc[i]
+        email_domain = (data['email'].split("@"))[1] # '@'을 구분자로 나눈다. 
+        if  email_domain not in email_domain_dic.keys():
+            email_domain_dic[email_domain] = 1
+        else:
+            email_domain_dic[email_domain] += 1
+    print("## EMAIL 도메인별 사용 인원")
+    for key in email_domain_dic.keys():
+        print("#", key, ": ", email_domain_dic[key], "명")
+
     return HttpResponse("calculate, calculate function!")

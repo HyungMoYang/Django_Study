@@ -9,6 +9,7 @@ urlpatterns = [
 
     path('signin', views.signin, name='main_signin'), # 로그인
     path('signin/login', views.login, name='main_login'), # 로그인 urls 처리 - session
+    path('loginFail', views.loginFail, name='main_loginFail'),
     path('verifyCode', views.verifyCode, name='main_verifyCode'), # 인증코드 입력 화면
     path('verify', views.verify, name='main_verify'), # 인증 코드 확인 기능 
     path('result', views.result, name='main_result'), # 결과 화면

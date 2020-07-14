@@ -45,7 +45,10 @@ def signin(request):
 def login(request):
     loginEmail = request.POST['loginEmail']
     loginPW = request.POST['loginPW']
-    user = User.objects.get(user_email = loginEmail) # DB에서 회원정보 get
+    try:
+        user = User.objects.get(user_email = loginEmail) # DB에서 회원정보 get
+    except:
+        return redirect('main_loginFail')
     # password 검사
     if user.user_password == loginPW:
         request.session['user_name'] = user.user_name
@@ -54,6 +57,9 @@ def login(request):
         return redirect('main_index')
     else:
         return redirect('main_loginFail')
+
+def loginFail(request):
+    return render(request, 'main/loginFail.html')
 
 def logout(request):
     user_name = request.session['user_name']
@@ -104,13 +110,24 @@ def verify(request):
     else:
         redirect('main_verifyCode')
 
-def result(request):
-    # login 여부 확인 체크
-    if 'user_name' in request.session.keys(): # 현재 'user_name'이 현재 저장된 session key에 있으면 정상 페이지
-        return render(request, 'main/index.html')
-    else: # 아니라면 login page로 리턴한다. 
-        return redirect('main_signin')
-    # return render(request, 'main/result.html')
+# def result(request):
+#     # login 여부 확인 체크
+#     if 'user_name' in request.session.keys(): # 현재 'user_name'이 현재 저장된 session key에 있으면 정상 페이지
+#         return render(request, 'main/index.html')
+#     else: # 아니라면 login page로 리턴한다. 
+#         return redirect('main_signin')
+#     # return render(request, 'main/result.html')
 
+# p377 result() 함수 수정
+def result(request):
+    if 'user_name' in request.session.keys():
+        content = {}
+        content['grade_calculate_dic'] = request.session['grade_calculate_dic']
+        content['email_domain_dic'] = request.session['email_domain_dic']
+        del request.session['grade_calculate_dic']
+        del request.session['email_domain_dic']
+        return render(request, 'main/result.html', content)
+    else:
+        return redirect('main_signin')
 
 

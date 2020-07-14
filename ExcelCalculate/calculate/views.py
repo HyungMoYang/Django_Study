@@ -12,7 +12,7 @@ def calculate(request):
     grade_dic = {} # create dict
     total_row_num = len(df.index)
     for i in range(total_row_num):
-        data = df.loc[i]
+        data = df.loc[i] # df의 i-1행의 데이터 
         if not data['grade'] in grade_dic.keys():
             grade_dic[data['grade']] = [data['value']]
         else:
@@ -38,8 +38,8 @@ def calculate(request):
     # 이메일 주소 도메인별 인원 구하기
     email_domain_dic = {}
     for i in range(total_row_num):
-        data = df.loc[i]
-        email_domain = (data['email'].split("@"))[1] # '@'을 구분자로 나눈다. 
+        data = df.loc[i] # df의 i-1행의 데이터 
+        email_domain = (data['email'].split("@"))[1] # 불러온 행의 'email'열에서 '@'을 구분자로 나눈다. 
         if  email_domain not in email_domain_dic.keys():
             email_domain_dic[email_domain] = 1
         else:
@@ -49,6 +49,8 @@ def calculate(request):
         print("#", key, ": ", email_domain_dic[key], "명")
 
     # return HttpResponse("calculate, calculate function!")
+    
+    # django에서의 호환을 위해서 데이터를 가공한다.
     grade_calculate_dic_to_session = {}
     for key in grade_list:
         grade_calculate_dic_to_session[int(key)] = {}
@@ -56,6 +58,7 @@ def calculate(request):
         grade_calculate_dic_to_session[int(key)]['avg'] = float(grade_calculate_dic[key]['avg'])
         grade_calculate_dic_to_session[int(key)]['min'] = float(grade_calculate_dic[key]['min'])
     request.session['grade_calculate_dic'] = grade_calculate_dic_to_session
+    
     request.session['email_domain_dic'] = email_domain_dic
     return redirect('/result')
         

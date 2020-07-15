@@ -118,6 +118,8 @@ def verify(request):
 #         return redirect('main_signin')
 #     # return render(request, 'main/result.html')
 
+
+
 # p377 result() 함수 수정
 def result(request):
     if 'user_name' in request.session.keys():
